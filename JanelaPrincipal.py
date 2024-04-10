@@ -2,7 +2,7 @@ import streamlit as st
 import streamlit_authenticator as stauth
 import yaml
 from yaml.loader import SafeLoader
-
+import os  # Importando o módulo os
 
 def projeto():
     import ProjetoCanhadas
@@ -10,17 +10,22 @@ def projeto():
 
 def authenticate():
     st.session_state["authentication_status"] = None  # Definir sempre como None para solicitar login
-    with open('ProjetoCanhadas/config.yaml') as file:
+    
+    # Construindo o caminho absoluto para o arquivo config.yaml
+    script_dir = os.path.dirname(__file__)  # Diretório do script atual
+    config_file_path = os.path.join(script_dir, 'ProjetoCanhadas', 'config.yaml')  # Caminho para o arquivo config.yaml
+    
+    with open(config_file_path) as file:
         config = yaml.load(file, Loader=SafeLoader)
 
-    autenticator = stauth.Authenticate(
+    authenticator = stauth.Authenticate(
         config['credentials'],
         config['cookie']['name'],
         config['cookie']['key'],
         config['cookie']['expiry_days']
     )
 
-    autenticator.login()
+    authenticator.login()
 
 def main():
     st.set_page_config(page_title="Projeto Canhadas", page_icon="ProjetoCanhadas/servmarico.ico")
@@ -28,14 +33,15 @@ def main():
     hide_menu_style = """
             <style>
             #MainMenu {visibility: hidden;}
-                footer {visibility: hidden;}
-                header {visibility: hidden;}
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+            </style>
             """
     st.markdown(hide_menu_style, unsafe_allow_html=True)
 
-    titulo=st.title("SERVMAR")
+    titulo = st.title("SERVMAR")
 
-    st.session_state["authentication_status"] = None 
+    st.session_state["authentication_status"] = None
     authenticate()
 
     if st.session_state.get("authentication_status"):
