@@ -1,9 +1,7 @@
 import pandas as pd
 
-def main(novo_caminho):
-    # Define o caminho do arquivo Excel de entrada.
-    caminho_excel = novo_caminho
-    # Abre o arquivo Excel para leitura.
+def main():
+    caminho_excel = "ProjetoCanhadas/0-Excel de Exemplos-0/Dados ALS TESTE.xlsx"
     excel = pd.ExcelFile(caminho_excel)
     data_frame_final = {}
     datas_amostra = {}  # Dicionário para armazenar datas das amostras para cada PM
@@ -14,7 +12,7 @@ def main(novo_caminho):
         lista_analyte = data_frame['ANALYTE'].unique()
 
         # Inicializando o DataFrame com uma linha extra para as datas
-        data_frame_tabelado = pd.DataFrame(index=range(len(lista_analyte) + 1), columns=['Parâmetro', 'CAS', 'Unidade'] + list(lista_pm))
+        data_frame_tabelado = pd.DataFrame(index=range(len(lista_analyte) + 1), columns=['Parametro', 'CAS', 'Unidade'] + list(lista_pm))
         correspondencia_unidades = {}
         correspondencia_cas = {}
 
@@ -25,7 +23,7 @@ def main(novo_caminho):
                 correspondencia_cas[analyte] = filtro_analyte['CASNUMBER_x'].iloc[0]
 
         for i, analyte in enumerate(lista_analyte, start=1):
-            data_frame_tabelado.at[i, 'Parâmetro'] = analyte
+            data_frame_tabelado.at[i, 'Parametro'] = analyte
             data_frame_tabelado.at[i, 'Unidade'] = correspondencia_unidades.get(analyte, '')
             data_frame_tabelado.at[i, 'CAS'] = correspondencia_cas.get(analyte, '')
 
@@ -66,8 +64,7 @@ def main(novo_caminho):
     if '%' in data_frame_final:
         data_frame_final['%'] = data_frame_final.pop('%')
 
-    # Salva os DataFrames reorganizados em um novo arquivo Excel.
-    with pd.ExcelWriter(novo_caminho) as writer:
+    with pd.ExcelWriter("ProjetoCanhadas/0-Excel de Exemplos-0/Dados ALS TESTE TESTE.xlsx") as writer:
         for sheet_name, df in data_frame_final.items():
             df.to_excel(writer, sheet_name=sheet_name, index=False)
 
