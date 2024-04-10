@@ -9,7 +9,7 @@ def projeto():
 
 def authenticate():
     st.session_state["authentication_status"] = None  # Definir sempre como None para solicitar login
-    with open('config.yaml') as file:
+    with open('ProjetoCanhadas\config.yaml') as file:
         config = yaml.load(file, Loader=SafeLoader)
 
     autenticator = stauth.Authenticate(

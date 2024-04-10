@@ -1,12 +1,12 @@
 import openpyxl
 
-def main(novo_caminho,valor_primario, ordem_planilhas,valor_secundario, ordem_planilhas2):
+def main(novo_caminho,valor_primario, ordem_planilhas,valor_secundario, ordem_planilhas2, valor_terceario, ordem_planilhas3):
 
     caminho_resultado = novo_caminho
-    caminho_cetesb = 'Tabelas Consulta/Tabelas/Tabela_Cetesb.xlsx'
-    caminho_epa = 'Tabelas Consulta/Tabelas/Tabela_EPA.xlsx'
-    caminho_listaholandesa = 'Tabelas Consulta/Tabelas/Tabela_ListaHolandesa.xlsx'
-    caminho_conama = 'Tabelas Consulta/Tabelas/Tabela_Conama.xlsx'
+    caminho_cetesb = 'ProjetoCanhadas/Tabelas Consulta/Tabelas/Tabela_Cetesb.xlsx'
+    caminho_epa = 'ProjetoCanhadas/Tabelas Consulta/Tabelas/Tabela_EPA.xlsx'
+    caminho_listaholandesa = 'ProjetoCanhadas/Tabelas Consulta/Tabelas/Tabela_ListaHolandesa.xlsx'
+    caminho_conama = 'ProjetoCanhadas/Tabelas Consulta/Tabelas/Tabela_Conama.xlsx'
     caminho_analise = novo_caminho
 
     # Carregar as planilhas
@@ -19,7 +19,8 @@ def main(novo_caminho,valor_primario, ordem_planilhas,valor_secundario, ordem_pl
     from openpyxl.styles import Font
 
 #------------------------------------------------------------------------------------------------------------------------------------------------
-
+   
+    # Iterar sobre as abas da planilha Resultado_Final_Organizado
     for sheet_name in wb_resultado.sheetnames:
         sheet_resultado = wb_resultado[sheet_name]
 
@@ -72,6 +73,7 @@ def main(novo_caminho,valor_primario, ordem_planilhas,valor_secundario, ordem_pl
                 # Se houve correspondência, comparar o quinto item da lista com os valores na mesma linha em Resultado_Final_Organizado.xlsx
                 if correspondencia_encontrada and len(valores_associados) >= 1:
                     coluna_selecionada = valores_associados[valor_primario]
+
                     try:
                         if coluna_selecionada != '-' and coluna_selecionada is not None:
                             coluna_selecionada = float(coluna_selecionada)
@@ -85,11 +87,10 @@ def main(novo_caminho,valor_primario, ordem_planilhas,valor_secundario, ordem_pl
                         else:
                             coluna_selecionada = None
                             pass
-                        
+
                     except ValueError:
                         # Se a conversão para int ou float falhar, não faz nada
                         pass
-                    
 
                     # Se esta é a primeira iteração, definir a coluna padrão
                     if indice_coluna_padrao is None:
@@ -98,7 +99,6 @@ def main(novo_caminho,valor_primario, ordem_planilhas,valor_secundario, ordem_pl
                     # Comparar e aplicar a formatação desejada
                     for col_index, cell_resultado in enumerate(row_resultado, start=indice_coluna_padrao):
                         valor_na_mesma_linha = cell_resultado.value
-
                         try:
                             # Verificar se o valor contém "<" e realizar a comparação
                             if valor_na_mesma_linha is not None and coluna_selecionada is not None:
@@ -130,8 +130,8 @@ def main(novo_caminho,valor_primario, ordem_planilhas,valor_secundario, ordem_pl
         ultimo_dado_lido = True
 
         # Imprimir "Valor Cetesb" ou "Valor EPA" uma vez acima do primeiro valor após o último dado
-        # Imprimir "Valor Cetesb", "Valor EPA", "Valor Lista Holandesa" ou "Valor Conama" uma vez acima do primeiro valor após o último dado
         if ultimo_dado_lido:
+
             if ordem_planilhas == 'c':
                 sheet_resultado.cell(row=2, column=indice_coluna_padrao, value="Valor Cetesb")
             elif ordem_planilhas == 'e':
@@ -157,7 +157,7 @@ def main(novo_caminho,valor_primario, ordem_planilhas,valor_secundario, ordem_pl
                 for cell_resultado in row_resultado:
                     if cell_resultado.value is None:
                         cell_resultado.value = 'n.e'
-            
+
     # Salvar as alterações na planilha Resultado_Final_Organizado.xlsx
     wb_resultado.save(caminho_analise)
 
@@ -182,6 +182,7 @@ def main(novo_caminho,valor_primario, ordem_planilhas,valor_secundario, ordem_pl
         elif ordem_planilhas2 == 'o':
             # Configurar 'e' para o segundo loop
             sheet_escolhido_secundario = wb_conama['Sheet1']
+            
 
         # Encontrar a coluna "Valor Cetesb" ou "Valor EPA"
         indice_coluna_primaria = None
@@ -213,8 +214,7 @@ def main(novo_caminho,valor_primario, ordem_planilhas,valor_secundario, ordem_pl
                 valor_primario = sheet_resultado.cell(row=row, column=indice_coluna_primaria).value
 
                 # Comparar e inserir valores na coluna "Valor Secundario"
-                if valor_primario in ["n.e"]:
-
+                if valor_primario in ["n.e", "-"]:
                     cas_value = sheet_resultado.cell(row=row, column=2).value  # Valor da coluna 'CAS'
                     unidade = sheet_resultado.cell(row=row, column=3).value
 
@@ -246,7 +246,7 @@ def main(novo_caminho,valor_primario, ordem_planilhas,valor_secundario, ordem_pl
                                 else:
                                     coluna_selecionada = None
                                     pass
-                                
+
                             except ValueError:
                                 # Se a conversão para int ou float falhar, não faz nada
                                 pass
@@ -259,7 +259,6 @@ def main(novo_caminho,valor_primario, ordem_planilhas,valor_secundario, ordem_pl
                             for col_index in range(2, col_index + 1):
                                 cell_resultado = sheet_resultado.cell(row=row, column=col_index)
                                 valor_na_mesma_linha = cell_resultado.value
-
                                 try:
                                     # Verificar se a célula não é nula e se o valor contém "<" e realizar a comparação
                                     if valor_na_mesma_linha is not None and coluna_selecionada is not None:
@@ -296,6 +295,135 @@ def main(novo_caminho,valor_primario, ordem_planilhas,valor_secundario, ordem_pl
     # Carregar novamente a planilha Resultado_Final_Organizado após as alterações
     wb_resultado = openpyxl.load_workbook(caminho_analise)
 
+#------------------------------------------------------------------------------------------------------------------------------------------------
+
+    # Iterar sobre as abas da planilha Resultado_Final_Organizado após as alterações
+    for sheet_name in wb_resultado.sheetnames:
+        sheet_resultado = wb_resultado[sheet_name]
+
+        ultimo_dado_lido = False
+
+        # Terceiro loop para processar 'c', 'e' ou 'l'
+        if ordem_planilhas3 == 'c':
+            sheet_escolhido_terceario = wb_cetesb['Sheet1']
+        elif ordem_planilhas3 == 'e':
+            sheet_escolhido_terceario = wb_epa['Sheet1']
+        elif ordem_planilhas3 == 'l':
+            sheet_escolhido_terceario = wb_listaholandesa['Sheet1']
+        elif ordem_planilhas3 == 'o':
+            sheet_escolhido_terceario = wb_conama['Sheet1']
+
+        # Encontrar a coluna "Valor Cetesb" ou "Valor EPA"
+        indice_coluna_primaria = None
+        for col_index, col in enumerate(sheet_resultado.iter_cols(min_row=2, max_row=2), start=1):
+            if "Valor Cetesb" in str(col[0].value) or "Valor EPA" in str(col[0].value) or "Valor Lista Holandesa" in str(col[0].value) or "Valor Conama" in str(col[0].value):
+                indice_coluna_primaria = col_index
+                break
+
+        # Verificar se a coluna "Valor Cetesb" foi encontrada
+        if indice_coluna_primaria is not None:
+            # Adicionar uma nova coluna para "Valor EPA" ou "Valor Cetesb" (invertido)
+            indice_coluna_terceario = indice_coluna_primaria + 2
+
+            if ordem_planilhas3 == 'c':
+                titulo_coluna_terceario = "Valor Cetesb"
+            elif ordem_planilhas3 == 'e':
+                titulo_coluna_terceario = "Valor EPA"
+            elif ordem_planilhas3 == 'l':
+                titulo_coluna_terceario = "Valor Lista Holandesa"
+            elif ordem_planilhas3 == 'o':
+                titulo_coluna_terceario = "Valor Conama"
+
+            sheet_resultado.cell(row=2, column=indice_coluna_terceario, value=titulo_coluna_terceario)
+
+            # Iterar sobre as linhas a partir da terceira linha (índice 3)
+            for row in range(3, sheet_resultado.max_row + 1):
+                valor_secundario = sheet_resultado.cell(row=row, column=indice_coluna_primaria + 1).value
+
+                # Comparar e inserir valores na coluna "Valor Terceario"
+                if valor_secundario in ["n.e", "-"]:
+                    cas_value = sheet_resultado.cell(row=row, column=2).value  # Valor da coluna 'CAS'
+                    unidade = sheet_resultado.cell(row=row, column=3).value
+
+                    # Verificar se o valor de 'CAS' não é nulo
+                    if cas_value is not None and unidade is not None:
+                        valores_associados = []  # Inicializar uma lista para armazenar todos os valores da linha correspondente
+
+                        # Iterar sobre as linhas da coluna 'CAS' na planilha terceária (wb_cetesb, wb_epa ou wb_listaholandesa)
+                        for row_terceario in sheet_escolhido_terceario.iter_rows(min_row=2, max_row=sheet_escolhido_terceario.max_row, min_col=2, max_col=sheet_escolhido_terceario.max_column):
+                            if row_terceario[0].value == cas_value:
+                                valores_associados = [cell.value for cell in row_terceario]
+                                break
+
+                        # Se houve correspondência, comparar o quinto item da lista com os valores na mesma linha em Resultado_Final_Organizado.xlsx
+                        # Comparar e inserir valores na coluna "Valor Terceario"
+                        if len(valores_associados) >= 1:
+                            coluna_selecionada = valores_associados[valor_terceario]
+
+                            try:
+                                if coluna_selecionada != '-'and coluna_selecionada is not None:
+                                    coluna_selecionada = float(coluna_selecionada)
+
+                                    if unidade == 'mg/L':
+                                        coluna_selecionada /= 1000
+                                    elif unidade == 'µg/L':
+                                        pass
+                                    else:
+                                        print(unidade)
+                                else:
+                                    coluna_selecionada = None
+                                    pass
+                                
+                            except ValueError:
+                                # Se a conversão para int ou float falhar, não faz nada
+                                pass
+
+                            # Se esta é a primeira iteração, definir a coluna padrão
+                            indice_coluna_terceario = indice_coluna_primaria + 2
+
+                            # Comparar e aplicar a formatação desejada
+                            for col_index in range(2, col_index + 1):
+                                cell_resultado = sheet_resultado.cell(row=row, column=col_index)
+                                valor_na_mesma_linha = cell_resultado.value
+                                try:
+                                    # Verificar se a célula não é nula e se o valor contém "<" e realizar a comparação
+                                    if valor_na_mesma_linha is not None and coluna_selecionada is not None:
+                                        if '<' in str(valor_na_mesma_linha):
+                                            cell_resultado.font = Font(color="C0C0C0")  # Pintar o texto de cinza
+                                        elif float(coluna_selecionada) > float(str(valor_na_mesma_linha).replace(',', '.')):
+                                            cell_resultado.font = Font(color="000000")  # Pintar o texto de cinza
+                                        elif float(coluna_selecionada) < float(str(valor_na_mesma_linha).replace(',', '.')):
+                                            cell_resultado.font = Font(color="FF0000")  # Pintar o texto de vermelho
+                                except ValueError:
+                                    # Se a conversão falhar, apenas ignore e continue
+                                    pass
+
+                            # Adicionar o valor da coluna selecionada como uma nova célula na mesma coluna
+                            sheet_resultado.cell(row=row, column=indice_coluna_terceario, value=coluna_selecionada)
+
+                            # Marcador de último dado lido
+                            ultimo_dado_lido = True
+                else:
+                    sheet_resultado.cell(row=row, column=indice_coluna_terceario, value="n.a")
+
+        # Marcador de último dado lido
+        ultimo_dado_lido = True
+
+        # Imprimir "Valor Cetesb" ou "Valor EPA" uma vez acima do primeiro valor após o último dado
+        if ultimo_dado_lido:
+            # Adicionar "n.e" às células em branco após inserir os valores do último dado lido
+            for row_resultado in sheet_resultado.iter_rows(min_row=3, max_row=sheet_resultado.max_row,
+                                                            min_col=sheet_resultado.max_column, max_col=sheet_resultado.max_column):
+                for cell_resultado in row_resultado:
+                    if cell_resultado.value is None:
+                        cell_resultado.value = 'n.e'
+
+    # Salvar as alterações na planilha Resultado_Final_Organizado_Formatado_cetesb_epa.xlsx
+    wb_resultado.save(caminho_analise)
+
+    # Carregar novamente a planilha Resultado_Final_Organizado após as alterações
+    wb_resultado = openpyxl.load_workbook(caminho_analise)
+
     from openpyxl.utils import get_column_letter
     from openpyxl.styles import Alignment, Font, Border, Side
 
@@ -310,6 +438,8 @@ def main(novo_caminho,valor_primario, ordem_planilhas,valor_secundario, ordem_pl
         sheet_resultado.insert_cols(idx=4)
         # Inserir uma nova coluna vazia na coluna E
         sheet_resultado.insert_cols(idx=5)
+        # Inserir uma nova coluna vazia na coluna F
+        sheet_resultado.insert_cols(idx=6)
 
         # Inicializar variáveis para armazenar as colunas de "Valor Cetesb" e "Valor EPA"
         coluna_cetesb = None
@@ -328,7 +458,7 @@ def main(novo_caminho,valor_primario, ordem_planilhas,valor_secundario, ordem_pl
             elif valor == "Valor Lista Holandesa":
                 coluna_listaholandesa = col_idx
             elif valor == "Valor Conama":
-                coluna_conama = col_idx
+                coluna_conama= col_idx
 
         # Suponha que as variáveis coluna_cetesb, coluna_epa e coluna_listaholandesa já foram definidas anteriormente
 
@@ -359,14 +489,12 @@ def main(novo_caminho,valor_primario, ordem_planilhas,valor_secundario, ordem_pl
         # Copiar os valores para as colunas D e E
         for row_idx in range(2, sheet_resultado.max_row + 1):
                     maior_valor_entre_colunas= sheet_resultado.cell(row=row_idx, column=maior_valor).value
+                    meio_valor_entre_colunas= sheet_resultado.cell(row=row_idx, column=menor_valor +1).value
                     menor_valor_entre_colunas = sheet_resultado.cell(row=row_idx, column=menor_valor).value
 
                     sheet_resultado.cell(row=row_idx, column=4, value=menor_valor_entre_colunas)
-                    sheet_resultado.cell(row=row_idx, column=5, value=maior_valor_entre_colunas)
-
-        for row in sheet_resultado.iter_rows(min_row=1, max_row=sheet_resultado.max_row, min_col=menor_valor, max_col=maior_valor):
-            for cell in row:
-                cell.value = None
+                    sheet_resultado.cell(row=row_idx, column=5, value=meio_valor_entre_colunas)
+                    sheet_resultado.cell(row=row_idx, column=6, value=maior_valor_entre_colunas)
 
         # Inserir o valor "Valor Orientador" na célula D1
         sheet_resultado.cell(row=1, column=4, value="Valor Orientador")
@@ -384,13 +512,17 @@ def main(novo_caminho,valor_primario, ordem_planilhas,valor_secundario, ordem_pl
             adjusted_width = (max_length + 1)
             sheet_resultado.column_dimensions[column].width = adjusted_width
 
+        for row in sheet_resultado.iter_rows(min_row=1, max_row=sheet_resultado.max_row, min_col=menor_valor, max_col=maior_valor):
+            for cell in row:
+                cell.value = None
+
         # Alinhar o texto ao centro das células mescladas e aplicar negrito
         for row in sheet_resultado.iter_rows(min_row=1, max_row=sheet_resultado.max_row, min_col=1, max_col=sheet_resultado.max_column - 2):
             for cell in row:
 
                 cell.alignment = Alignment(horizontal='center', vertical='center')
                 # Aplicar negrito aos valores "Valor EPA" e "Valor Cetesb"
-                if cell.value in ["Valor EPA", "Valor Cetesb","Valor Lista Holandesa","Valor Conama","Valor Orientador"]:
+                if cell.value in ["Valor EPA","Valor Cetesb","Valor Lista Holandesa","Valor Conama","Valor Orientador"]:
                     cell.font = Font(bold=True)
 
                 # Adicionar todas as bordas com estilo "todas as bordas"
@@ -402,7 +534,7 @@ def main(novo_caminho,valor_primario, ordem_planilhas,valor_secundario, ordem_pl
                 )
 
         # Mesclar a célula D1 até a célula E1
-        sheet_resultado.merge_cells(start_row=1, start_column=4, end_row=1, end_column=5)
+        sheet_resultado.merge_cells(start_row=1, start_column=4, end_row=1, end_column=6)
 
         # Mesclar células A1 até A2
         sheet_resultado.merge_cells(start_row=1, start_column=1, end_row=2, end_column=1)
@@ -415,7 +547,7 @@ def main(novo_caminho,valor_primario, ordem_planilhas,valor_secundario, ordem_pl
 
         # Verificação e coloração do texto das células a partir da coluna G e linha 3
         for row_idx in range(3, sheet_resultado.max_row + 1):
-            for col_idx in range(6, sheet_resultado.max_column + 1):
+            for col_idx in range(7, sheet_resultado.max_column + 1):
                 cell_value = sheet_resultado.cell(row=row_idx, column=col_idx).value
 
                 # Verifica se o valor na célula é "<" e altera a cor do texto para preto
