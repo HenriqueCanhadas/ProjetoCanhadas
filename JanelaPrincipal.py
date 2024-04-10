@@ -3,13 +3,14 @@ import streamlit_authenticator as stauth
 import yaml
 from yaml.loader import SafeLoader
 
+
 def projeto():
     import ProjetoCanhadas
     ProjetoCanhadas.main()
 
 def authenticate():
     st.session_state["authentication_status"] = None  # Definir sempre como None para solicitar login
-    with open('ProjetoCanhadas\config.yaml') as file:
+    with open('ProjetoCanhadas/config.yaml') as file:
         config = yaml.load(file, Loader=SafeLoader)
 
     autenticator = stauth.Authenticate(
