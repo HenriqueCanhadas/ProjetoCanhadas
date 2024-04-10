@@ -2,15 +2,12 @@ import openpyxl
 
 def main(novo_caminho,valor_primario, ordem_planilhas,valor_secundario, ordem_planilhas2):
 
-    # Definindo caminhos absolutos
-    base_path = 'C:\Users\henrique.canhadas\OneDrive - Servmar Ambientais\Documentos\Codigos\GitHub Tecnologia\ProjetoCanhadas\Tabelas Consulta\Tabelas'
-    caminho_resultado = novo_caminho  # Este caminho também deve ser absoluto se não estiver no mesmo diretório
-    caminho_cetesb = base_path + 'Tabela_Cetesb.xlsx'
-    caminho_epa = base_path + 'Tabela_EPA.xlsx'
-    caminho_listaholandesa = base_path + 'Tabela_ListaHolandesa.xlsx'
-    caminho_conama = base_path + 'Tabela_Conama.xlsx'
-    caminho_analise = novo_caminho  # Este caminho também deve ser absoluto se não estiver no mesmo diretório
-
+    caminho_resultado = novo_caminho
+    caminho_cetesb = 'ProjetoCanhadas/Tabelas Consulta/Tabelas/Tabela_Cetesb.xlsx'
+    caminho_epa = 'ProjetoCanhadas/Tabelas Consulta/Tabelas/Tabela_EPA.xlsx'
+    caminho_listaholandesa = 'ProjetoCanhadas/Tabelas Consulta/Tabelas/Tabela_ListaHolandesa.xlsx'
+    caminho_conama = 'ProjetoCanhadas/Tabelas Consulta/Tabelas/Tabela_Conama.xlsx'
+    caminho_analise = novo_caminho
 
     # Carregar as planilhas
     wb_resultado = openpyxl.load_workbook(caminho_resultado)
