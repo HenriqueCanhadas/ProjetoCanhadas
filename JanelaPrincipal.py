@@ -2,7 +2,6 @@ import streamlit as st
 import streamlit_authenticator as stauth
 import yaml
 import requests
-import os
 
 def projeto():
     import ProjetoCanhadas

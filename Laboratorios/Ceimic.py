@@ -1,6 +1,7 @@
 import pandas as pd
 from openpyxl import Workbook
 
+
 def main(uploaded_file, novo_caminho):
     # Ler o arquivo compartilhador.xlsx
     tabela = pd.read_excel(uploaded_file)
