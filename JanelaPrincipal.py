@@ -1,7 +1,7 @@
 import streamlit as st
 import streamlit_authenticator as stauth
 import yaml
-from yaml.loader import SafeLoader
+import requests
 import os
 
 def projeto():
@@ -11,18 +11,21 @@ def projeto():
 def authenticate():
     st.session_state["authentication_status"] = None
     
-    # Caminho absoluto do diretório do script atual
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Caminho para o arquivo config.yaml, normalizando o caminho
-    config_file_path = os.path.normpath(os.path.join(script_dir, 'ProjetoCanhadas', 'config.yaml'))
+    # URL do arquivo config.yaml em modo raw
+    config_url = 'https://raw.githubusercontent.com/TecnologiaServmar/ProjetoCanhadas/main/config.yaml'
     
-    # Verificação para garantir que o arquivo existe
-    if not os.path.exists(config_file_path):
-        st.error(f"Arquivo de configuração não encontrado: {config_file_path}")
+    try:
+        response = requests.get(config_url)
+        # Verifica se o request foi bem sucedido
+        if response.status_code == 200:
+            # Carregando o conteúdo do YAML
+            config = yaml.load(response.content, Loader=yaml.SafeLoader)
+        else:
+            st.error("Falha ao carregar o arquivo de configuração.")
+            return
+    except Exception as e:
+        st.error(f"Erro ao buscar o arquivo de configuração: {e}")
         return
-
-    with open(config_file_path) as file:
-        config = yaml.load(file, Loader=SafeLoader)
 
     authenticator = stauth.Authenticate(
         config['credentials'],
@@ -34,7 +37,7 @@ def authenticate():
     authenticator.login()
 
 def main():
-    st.set_page_config(page_title="Projeto Canhadas", page_icon="ProjetoCanhadas/servmarico.ico")
+    st.set_page_config(page_title="Projeto Canhadas", page_icon=":shark:")
         
     hide_menu_style = """
             <style>
