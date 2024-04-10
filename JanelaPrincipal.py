@@ -2,19 +2,25 @@ import streamlit as st
 import streamlit_authenticator as stauth
 import yaml
 from yaml.loader import SafeLoader
-import os  # Importando o módulo os
+import os
 
 def projeto():
     import ProjetoCanhadas
     ProjetoCanhadas.main()
 
 def authenticate():
-    st.session_state["authentication_status"] = None  # Definir sempre como None para solicitar login
+    st.session_state["authentication_status"] = None
     
-    # Construindo o caminho absoluto para o arquivo config.yaml
-    script_dir = os.path.dirname(__file__)  # Diretório do script atual
-    config_file_path = os.path.join(script_dir, 'ProjetoCanhadas', 'config.yaml')  # Caminho para o arquivo config.yaml
+    # Caminho absoluto do diretório do script atual
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    # Caminho para o arquivo config.yaml, normalizando o caminho
+    config_file_path = os.path.normpath(os.path.join(script_dir, 'ProjetoCanhadas', 'config.yaml'))
     
+    # Verificação para garantir que o arquivo existe
+    if not os.path.exists(config_file_path):
+        st.error(f"Arquivo de configuração não encontrado: {config_file_path}")
+        return
+
     with open(config_file_path) as file:
         config = yaml.load(file, Loader=SafeLoader)
 
@@ -48,7 +54,7 @@ def main():
         titulo.empty()
         success_message = st.success("Login Feito, Seja Bem Vindo!")
         projeto()
-        success_message.empty()  # Remove a mensagem após 3 segundos
+        success_message.empty()
     elif st.session_state["authentication_status"] is False:
         st.error("Usuário e/ou Senha Incorretos")
     elif st.session_state["authentication_status"] is None:
