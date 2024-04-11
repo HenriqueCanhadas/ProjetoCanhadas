@@ -53,7 +53,6 @@ def main():
         st.session_state["authentication_status"] = None
 
     if st.session_state.get("authentication_status") is None or st.session_state.get("authentication_status") is False:
-        titulo = st.title("SERVMAR")
         authenticate()
 
     if st.session_state.get("authentication_status"):
