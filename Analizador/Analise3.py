@@ -1,20 +1,29 @@
 import openpyxl
+import requests
+from io import BytesIO
+
+def carregar_planilha(url):
+    response = requests.get(url)
+    if response.status_code == 200:
+        return openpyxl.load_workbook(BytesIO(response.content))
+    else:
+        raise Exception(f"Falha ao carregar o arquivo de {url}")
 
 def main(novo_caminho,valor_primario, ordem_planilhas,valor_secundario, ordem_planilhas2, valor_terceario, ordem_planilhas3):
 
     caminho_resultado = novo_caminho
-    caminho_cetesb = 'ProjetoCanhadas/Tabelas Consulta/Tabelas/Tabela_Cetesb.xlsx'
-    caminho_epa = 'ProjetoCanhadas/Tabelas Consulta/Tabelas/Tabela_EPA.xlsx'
-    caminho_listaholandesa = 'ProjetoCanhadas/Tabelas Consulta/Tabelas/Tabela_ListaHolandesa.xlsx'
-    caminho_conama = 'ProjetoCanhadas/Tabelas Consulta/Tabelas/Tabela_Conama.xlsx'
+    caminho_cetesb = 'https://raw.githubusercontent.com/TecnologiaServmar/ProjetoCanhadas/main/Tabelas%20Consulta/Tabelas/Tabela_Cetesb.xlsx'
+    caminho_epa = 'https://raw.githubusercontent.com/TecnologiaServmar/ProjetoCanhadas/main/Tabelas%20Consulta/Tabelas/Tabela_EPA.xlsx'
+    caminho_listaholandesa = 'https://raw.githubusercontent.com/TecnologiaServmar/ProjetoCanhadas/main/Tabelas%20Consulta/Tabelas/Tabela_ListaHolandesa.xlsx'
+    caminho_conama = 'https://raw.githubusercontent.com/TecnologiaServmar/ProjetoCanhadas/main/Tabelas%20Consulta/Tabelas/Tabela_Conama.xlsx'
     caminho_analise = novo_caminho
 
     # Carregar as planilhas
     wb_resultado = openpyxl.load_workbook(caminho_resultado)
-    wb_cetesb = openpyxl.load_workbook(caminho_cetesb)
-    wb_epa = openpyxl.load_workbook(caminho_epa)
-    wb_listaholandesa = openpyxl.load_workbook(caminho_listaholandesa)
-    wb_conama = openpyxl.load_workbook(caminho_conama)
+    wb_cetesb = carregar_planilha(caminho_cetesb)
+    wb_epa = carregar_planilha(caminho_epa)
+    wb_listaholandesa = carregar_planilha(caminho_listaholandesa)
+    wb_conama = carregar_planilha(caminho_conama)
 
     from openpyxl.styles import Font
 
