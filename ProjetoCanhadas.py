@@ -367,6 +367,23 @@ def carregar_analise_3_valores(uploaded_file, novo_caminho, escolha, quantidade_
         progresso += 34
         yield progresso
 
+    elif quantidade_analise == 3 and escolha == "ALS":
+        print("ALSSSSSAAAA")
+        # Etapa 1: Importar Ceimic
+        ALS.main(uploaded_file, novo_caminho)
+        progresso += 33
+        yield progresso
+        
+        # Etapa 2: Organizar
+        Organizar.main(novo_caminho)
+        progresso += 33
+        yield progresso
+        
+        # Etapa 3: Analise3
+        Analise3.main(novo_caminho, valor_primario, ordem_planilhas, valor_secundario, ordem_planilhas2, valor_terceario, ordem_planilhas3)
+        progresso += 34
+        yield progresso
+
 def carregar_analise_2_valores(uploaded_file, novo_caminho, escolha, quantidade_analise, valor_primario, ordem_planilhas, valor_secundario, ordem_planilhas2):
     progresso = 0
     
@@ -387,16 +404,33 @@ def carregar_analise_2_valores(uploaded_file, novo_caminho, escolha, quantidade_
         progresso += 35
         yield progresso
 
+    elif quantidade_analise == 2 and escolha == "ALS":
+        print("ALSSSSSSSS")
+        # Etapa 1: Importar Ceimic
+        ALS.main(uploaded_file, novo_caminho)
+        progresso += 25
+        yield progresso
+
+        # Etapa 2: Organizar
+        Organizar.main(novo_caminho)
+        progresso += 40
+        yield progresso
+
+        # Etapa 3: Analise2
+        Analise2.main(novo_caminho, valor_primario, ordem_planilhas, valor_secundario, ordem_planilhas2)
+        progresso += 35
+        yield progresso
+
 def main():
 
-    hide_menu_style = """
-            <style>
-            #MainMenu {visibility: hidden;}
-                footer {visibility: hidden;}
-                header {visibility: hidden;}
-            </style>
-            """
-    st.markdown(hide_menu_style, unsafe_allow_html=True)
+#    hide_menu_style = """
+#            <style>
+#            #MainMenu {visibility: hidden;}
+#                footer {visibility: hidden;}
+#                header {visibility: hidden;}
+#            </style>
+#            """
+#    st.markdown(hide_menu_style, unsafe_allow_html=True)
     
     st.title("SERVMAR")
     st.subheader("Projeto Canhadas")
@@ -425,7 +459,7 @@ def main():
             col1, col2 = st.columns(2)
 
             with col1:
-                escolha = st.radio("Escolha de qual laboratório a análise deve ser feita:", ["Ceimic"], key="escolha_laboratorio_1")
+                escolha = st.radio("Escolha de qual laboratório a análise deve ser feita:", ["Ceimic","ALS"], key="escolha_laboratorio_1")
 
             with col2:
                 # Mapeamento de opções de texto para valores numéricos
