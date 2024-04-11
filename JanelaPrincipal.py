@@ -36,7 +36,7 @@ def authenticate():
     authenticator.login()
 
 def main():
-    st.set_page_config(page_title="Projeto Canhadas", page_icon=":shark:")
+    st.set_page_config(page_title="Projeto Canhadas", page_icon="servmarico.ico")
         
     hide_menu_style = """
             <style>
