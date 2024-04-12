@@ -431,8 +431,7 @@ def main():
 #            </style>
 #            """
 #    st.markdown(hide_menu_style, unsafe_allow_html=True)
-    
-    st.title("SERVMAR")
+
     st.subheader("Projeto Canhadas")
     
     uploaded_file = st.file_uploader("Carregue seu arquivo Excel:", type=["xlsx", "xls"], key="excel_uploader_1",label_visibility="visible")

@@ -36,12 +36,12 @@ def authenticate():
 
 # Função para exibir a mensagem temporária
 def display_temporary_success_message():
-    titulo = st.title("SERVMAR")
+    # Aguarda 5 segundos
+    time.sleep(3)
     # Exibe a mensagem de sucesso
     success_message = st.success("Login Feito, Seja Bem Vindo!")
     # Aguarda 5 segundos
-    time.sleep(5)
-    titulo.empty()
+    time.sleep(3)
     # Remove a mensagem de sucesso
     success_message.empty()
 
@@ -49,6 +49,7 @@ def display_temporary_success_message():
 def main():
     global titulo
     st.set_page_config(page_title="Projeto Canhadas", page_icon="servmarico.ico")
+    titulo = st.title("SERVMAR")
     if "authentication_status" not in st.session_state:
         st.session_state["authentication_status"] = None
 
