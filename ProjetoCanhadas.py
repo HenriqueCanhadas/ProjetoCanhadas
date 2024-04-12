@@ -423,14 +423,14 @@ def carregar_analise_2_valores(uploaded_file, novo_caminho, escolha, quantidade_
 
 def main():
 
-#    hide_menu_style = """
-#            <style>
-#            #MainMenu {visibility: hidden;}
-#                footer {visibility: hidden;}
-#                header {visibility: hidden;}
-#            </style>
-#            """
-#    st.markdown(hide_menu_style, unsafe_allow_html=True)
+    hide_menu_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+                footer {visibility: hidden;}
+                header {visibility: hidden;}
+            </style>
+            """
+    st.markdown(hide_menu_style, unsafe_allow_html=True)
 
     st.subheader("Projeto Canhadas")
     
