@@ -1,7 +1,4 @@
 import streamlit as st
-
-st.set_page_config(layout="wide")
-
 st.markdown(
     """
     <style>
@@ -49,6 +46,8 @@ from Organizador import Organizar
 #Importar Codigos para Analisar os valores
 from Analizador import Analise2
 from Analizador import Analise3
+
+st.set_page_config(layout="wide")
 
 def abrir_radiobutton_modal_3_valores(contador, escolha_anterior=None,):
     valor_primario = None
