@@ -4,6 +4,42 @@ import yaml
 import requests
 import time
 
+st.set_page_config(layout="wide")
+
+st.markdown(
+    """
+    <style>
+    html, body, [class*="View"] {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+    }
+    .reportview-container {
+        margin: 20px;
+        flex: 1;
+    }
+    .main .block-container {
+        width: calc(100% - 40px);  /* Subtrai as margens */
+        padding: 0;
+        margin: 0 auto;
+    }
+    
+    /* Estilos responsivos para diferentes tamanhos de tela */
+    @media (max-width: 768px) {
+        .reportview-container {
+            margin: 10px; /* Menor margem para telas menores */
+        }
+        .main .block-container {
+            width: calc(100% - 20px); /* Ajusta a largura para telas menores */
+        }
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+
 # Função do Projeto Canhadas
 def projeto():
     import ProjetoCanhadas
