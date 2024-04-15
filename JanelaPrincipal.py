@@ -1,7 +1,4 @@
 import streamlit as st
-
-st.set_page_config(page_title="Projeto Canhadas", page_icon="servmarico.ico")
-
 import streamlit_authenticator as stauth
 import yaml
 import requests
