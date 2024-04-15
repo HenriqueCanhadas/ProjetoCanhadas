@@ -1,4 +1,7 @@
 import streamlit as st
+
+st.set_page_config(page_title="Projeto Canhadas", page_icon="servmarico.ico")
+
 import streamlit_authenticator as stauth
 import yaml
 import requests
@@ -48,16 +51,14 @@ def display_temporary_success_message():
 # Função principal que define a configuração da página e o fluxo de autenticação
 def main():
 
-#    hide_menu_style = """
-#            <style>
-#            #MainMenu {visibility: hidden;}
-#                footer {visibility: hidden;}
-#                header {visibility: hidden;}
-#            </style>
-#            """
-#    st.markdown(hide_menu_style, unsafe_allow_html=True)
-
-    st.set_page_config(page_title="Projeto Canhadas", page_icon="servmarico.ico")
+    hide_menu_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+                footer {visibility: hidden;}
+                header {visibility: hidden;}
+            </style>
+            """
+    st.markdown(hide_menu_style, unsafe_allow_html=True)
     st.title("SERVMAR")
     if "authentication_status" not in st.session_state:
         st.session_state["authentication_status"] = None
