@@ -50,8 +50,6 @@ from Organizador import Organizar
 from Analizador import Analise2
 from Analizador import Analise3
 
-st.set_page_config(layout="wide")
-
 def abrir_radiobutton_modal_3_valores(contador, escolha_anterior=None,):
     valor_primario = None
     ordem_planilhas = None
