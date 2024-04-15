@@ -1,4 +1,41 @@
 import streamlit as st
+
+st.set_page_config(layout="wide")
+
+st.markdown(
+    """
+    <style>
+    html, body, [class*="View"] {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+    }
+    .reportview-container {
+        margin: 20px;
+        flex: 1;
+    }
+    .main .block-container {
+        width: calc(100% - 40px);  /* Subtrai as margens */
+        padding: 0;
+        margin: 0 auto;
+    }
+    
+    /* Estilos responsivos para diferentes tamanhos de tela */
+    @media (max-width: 768px) {
+        .reportview-container {
+            margin: 10px; /* Menor margem para telas menores */
+        }
+        .main .block-container {
+            width: calc(100% - 20px); /* Ajusta a largura para telas menores */
+        }
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+
 import os
 import pandas as pd
 
@@ -423,97 +460,107 @@ def carregar_analise_2_valores(uploaded_file, novo_caminho, escolha, quantidade_
 
 def main():
 
-    hide_menu_style = """
-            <style>
-            #MainMenu {visibility: hidden;}
-                footer {visibility: hidden;}
-                header {visibility: hidden;}
-            </style>
-            """
-    st.markdown(hide_menu_style, unsafe_allow_html=True)
+    st.markdown(
+        """
+        <style>
+        .reportview-container .main .block-container{
+            max-width: 100%;
+            padding-top: 0rem;
+            padding-right: 1rem;
+            padding-left: 1rem;
+            padding-bottom: 0rem;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+#    hide_menu_style = """
+#            <style>
+#            #MainMenu {visibility: hidden;}
+#                footer {visibility: hidden;}
+#                header {visibility: hidden;}
+#            </style>
+#            """
+#    st.markdown(hide_menu_style, unsafe_allow_html=True)
 
-    st.subheader("Projeto Canhadas")
+    st.header("Projeto Canhadas")
+
+    # Criar duas colunas
+    left_column, right_column = st.columns(2)
     
-    uploaded_file = st.file_uploader("Carregue seu arquivo Excel:", type=["xlsx", "xls"], key="excel_uploader_1",label_visibility="visible")
 
-    if uploaded_file:
-        df = pd.read_excel(uploaded_file)
-        st.write("Dados do arquivo Excel:")
-        st.write(df)
+    
+    with left_column:
+        uploaded_file = st.file_uploader("Carregue seu arquivo Excel:", type=["xlsx", "xls"], key="excel_uploader_1",label_visibility="visible")
 
-        # Extrair diretório do caminho do arquivo escolhido
-        diretório, _ = os.path.split(uploaded_file.name)
-        
 
-        nome_arquivo = st.text_input("Digite o nome do novo arquivo:", key="nome_arquivo")
 
-        if nome_arquivo:
-            novo_caminho = os.path.join(diretório, nome_arquivo + ".xlsx")
-        else:
-            novo_caminho = os.path.join(diretório, ".xlsx")
-            st.warning("Por favor, insira um nome para o novo arquivo.")
+        diretório=""
+        if uploaded_file:
 
-        if nome_arquivo:  # Verifica se um nome de arquivo foi inserido
-            # Mostrar opções seguintes somente se o nome do arquivo for inserido
-            col1, col2 = st.columns(2)
 
-            with col1:
-                escolha = st.radio("Escolha de qual laboratório a análise deve ser feita:", ["Ceimic","ALS"], key="escolha_laboratorio_1")
+            df = pd.read_excel(uploaded_file)
+            st.write("Dados do arquivo Excel:")
+            st.write(df)
+            # Extrair diretório do caminho do arquivo escolhido
+            diretório, _ = os.path.split(uploaded_file.name)
 
-            with col2:
-                # Mapeamento de opções de texto para valores numéricos
-                quantidade_analise_options = {"2 Valores Orientadores": 2, "3 Valores Orientadores": 3}
-                # Usando os textos descritivos no widget, mas obtendo os valores numéricos quando necessário
-                quantidade_analise_texto = st.radio("Escolha a quantidade de Valores Orientadores:", list(quantidade_analise_options.keys()), key="quantidade_analise_1", index=None)
+        with right_column:
 
-            # Verificar se a chave existe no dicionário antes de acessá-la
-            if quantidade_analise_texto in quantidade_analise_options:
-                quantidade_analise = quantidade_analise_options[quantidade_analise_texto]
+            nome_arquivo = st.text_input("1° Digite o nome do novo arquivo:", key="nome_arquivo")
+            if nome_arquivo:
+                novo_caminho = os.path.join(diretório, nome_arquivo + ".xlsx")
             else:
-                quantidade_analise = None  # Ou outro valor padrão que faça sentido no seu código
-        else:
-            # Oculta as opções seguintes se o nome do arquivo não for inserido
-            quantidade_analise = None
+                novo_caminho = os.path.join(diretório, ".xlsx")
+                st.warning("Por favor, insira um nome para o novo arquivo.")
+            if nome_arquivo:  # Verifica se um nome de arquivo foi inserido
+                # Mostrar opções seguintes somente se o nome do arquivo for inserido
+                col1, col2 = st.columns(2)
+                with col1:
+                    escolha = st.radio("2° Escolha qual laboratório a análise deve ser feita:", ["Ceimic","ALS"], key="escolha_laboratorio_1")
+                with col2:
+                    # Mapeamento de opções de texto para valores numéricos
+                    quantidade_analise_options = {"2 Valores Orientadores": 2, "3 Valores Orientadores": 3}
+                    # Usando os textos descritivos no widget, mas obtendo os valores numéricos quando necessário
+                    quantidade_analise_texto = st.radio("3° Escolha a quantidade de Valores Orientadores:", list(quantidade_analise_options.keys()), key="quantidade_analise_1", index=None)
+                # Verificar se a chave existe no dicionário antes de acessá-la
+                if quantidade_analise_texto in quantidade_analise_options:
+                    quantidade_analise = quantidade_analise_options[quantidade_analise_texto]
+                else:
+                    quantidade_analise = None  # Ou outro valor padrão que faça sentido no seu código
+            else:
+                # Oculta as opções seguintes se o nome do arquivo não for inserido
+                quantidade_analise = None
+            if quantidade_analise == 2:
+                valor_primario = None
+                ordem_planilhas = None
+                valor_secundario = None
+                ordem_planilhas2 = None
+                valor_primario, ordem_planilhas, valor_secundario, ordem_planilhas2 = abrir_radiobutton_modal_2_valores(2)
+            elif quantidade_analise == 3:
+                valor_primario = None
+                ordem_planilhas = None
+                valor_secundario = None
+                ordem_planilhas2 = None
+                valor_terceario = None
+                ordem_planilhas3 = None
+                col1, col2 = st.columns(2)
+                valor_primario, ordem_planilhas, valor_secundario, ordem_planilhas2, valor_terceario, ordem_planilhas3 = abrir_radiobutton_modal_3_valores(2)
+            if (quantidade_analise == 2 and (valor_primario is not None and ordem_planilhas is not None and valor_secundario is not None and ordem_planilhas2 is not None)) or (quantidade_analise == 3 and (valor_primario is not None and ordem_planilhas is not None and valor_secundario is not None and ordem_planilhas2 is not None and valor_terceario is not None and ordem_planilhas3 is not None)):
+            
+                st.divider()  # 👈 Draws a horizontal rule
+                if st.button("Fazer Análise", type="primary"):
+                    progresso_placeholder = st.empty()
+                    progresso_bar = progresso_placeholder.progress(0)
+                    if quantidade_analise == 2:
+                        for progresso in carregar_analise_2_valores(uploaded_file, novo_caminho, escolha, quantidade_analise, valor_primario, ordem_planilhas, valor_secundario, ordem_planilhas2):
+                            progresso_bar.progress(progresso)
+                    elif quantidade_analise == 3:
+                        for progresso in carregar_analise_3_valores(uploaded_file, novo_caminho, escolha, quantidade_analise, valor_primario, ordem_planilhas, valor_secundario, ordem_planilhas2, valor_terceario, ordem_planilhas3):
+                            progresso_bar.progress(progresso)
+                    # Adiciona a funcionalidade de download
+                    download_excel(novo_caminho)
 
-
-        if quantidade_analise == 2:
-
-            valor_primario = None
-            ordem_planilhas = None
-            valor_secundario = None
-            ordem_planilhas2 = None
-
-            valor_primario, ordem_planilhas, valor_secundario, ordem_planilhas2 = abrir_radiobutton_modal_2_valores(2)
-
-        elif quantidade_analise == 3:
-
-            valor_primario = None
-            ordem_planilhas = None
-            valor_secundario = None
-            ordem_planilhas2 = None
-            valor_terceario = None
-            ordem_planilhas3 = None
-
-            col1, col2 = st.columns(2)
-
-            valor_primario, ordem_planilhas, valor_secundario, ordem_planilhas2, valor_terceario, ordem_planilhas3 = abrir_radiobutton_modal_3_valores(2)
-
-        if (quantidade_analise == 2 and (valor_primario is not None and ordem_planilhas is not None and valor_secundario is not None and ordem_planilhas2 is not None)) or (quantidade_analise == 3 and (valor_primario is not None and ordem_planilhas is not None and valor_secundario is not None and ordem_planilhas2 is not None and valor_terceario is not None and ordem_planilhas3 is not None)):
-           
-            st.divider()  # 👈 Draws a horizontal rule
-
-            if st.button("Fazer Análise", type="primary"):
-                progresso_placeholder = st.empty()
-                progresso_bar = progresso_placeholder.progress(0)
-                if quantidade_analise == 2:
-                    for progresso in carregar_analise_2_valores(uploaded_file, novo_caminho, escolha, quantidade_analise, valor_primario, ordem_planilhas, valor_secundario, ordem_planilhas2):
-                        progresso_bar.progress(progresso)
-                elif quantidade_analise == 3:
-                    for progresso in carregar_analise_3_valores(uploaded_file, novo_caminho, escolha, quantidade_analise, valor_primario, ordem_planilhas, valor_secundario, ordem_planilhas2, valor_terceario, ordem_planilhas3):
-                        progresso_bar.progress(progresso)
-
-                # Adiciona a funcionalidade de download
-                download_excel(novo_caminho)
 
 def download_excel(novo_caminho):
     # Configurar o nome do arquivo para download
