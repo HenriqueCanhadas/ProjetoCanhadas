@@ -1,7 +1,7 @@
 import pandas as pd
 
 def main():
-    caminho_excel = "ProjetoCanhadas/0-Excel de Exemplos-0/Dados ALS TESTE.xlsx"
+    caminho_excel = r"C:\Users\henrique.canhadas\OneDrive - Servmar Ambientais\Documentos\Codigos\GitHub Tecnologia\ProjetoCanhadas\0-Excel de Exemplos-0\DADOS Vapor Solutions resultado.xlsx"
     excel = pd.ExcelFile(caminho_excel)
     data_frame_final = {}
     datas_amostra = {}  # Dicionário para armazenar datas das amostras para cada PM
@@ -64,7 +64,7 @@ def main():
     if '%' in data_frame_final:
         data_frame_final['%'] = data_frame_final.pop('%')
 
-    with pd.ExcelWriter("ProjetoCanhadas/0-Excel de Exemplos-0/Dados ALS TESTE TESTE.xlsx") as writer:
+    with pd.ExcelWriter(r"C:\Users\henrique.canhadas\OneDrive - Servmar Ambientais\Documentos\Codigos\GitHub Tecnologia\ProjetoCanhadas\0-Excel de Exemplos-0\DADOS Vapor Solutions testetestes.xlsx") as writer:
         for sheet_name, df in data_frame_final.items():
             df.to_excel(writer, sheet_name=sheet_name, index=False)
 

@@ -6,6 +6,7 @@ import pandas as pd
 from Laboratorios import Ceimic
 from Laboratorios import ALS
 from Laboratorios import Eurofins
+from Laboratorios import VaporSolutions
 
 #Importar Codigo para Organizar
 from Organizador import Organizar
@@ -369,7 +370,6 @@ def carregar_analise_3_valores(uploaded_file, novo_caminho, escolha, quantidade_
         yield progresso
 
     elif quantidade_analise == 3 and escolha == "ALS":
-        print("ALSSSSSAAAA")
         # Etapa 1: Importar Ceimic
         ALS.main(uploaded_file, novo_caminho)
         progresso += 33
@@ -386,7 +386,6 @@ def carregar_analise_3_valores(uploaded_file, novo_caminho, escolha, quantidade_
         yield progresso
 
     elif quantidade_analise == 3 and escolha == "EuroFins":
-        print("EUROOOOOOO")
         # Etapa 1: Importar Ceimic
         Eurofins.main(uploaded_file, novo_caminho)
         progresso += 33
@@ -402,7 +401,22 @@ def carregar_analise_3_valores(uploaded_file, novo_caminho, escolha, quantidade_
         progresso += 34
         yield progresso
 
-
+#    elif quantidade_analise == 3 and escolha == "Vapor Solutions":
+#        print("VAPOOOOOO")
+#        # Etapa 1: Importar Ceimic
+#        VaporSolutions.main(uploaded_file, novo_caminho)
+#        progresso += 33
+#        yield progresso
+#        
+#        # Etapa 2: Organizar
+#        Organizar.main(novo_caminho)
+#        progresso += 33
+#        yield progresso
+#        
+#        # Etapa 3: Analise3
+#        Analise3.main(novo_caminho, valor_primario, ordem_planilhas, valor_secundario, ordem_planilhas2, valor_terceario, ordem_planilhas3)
+#        progresso += 34
+#        yield progresso
 
 def carregar_analise_2_valores(uploaded_file, novo_caminho, escolha, quantidade_analise, valor_primario, ordem_planilhas, valor_secundario, ordem_planilhas2):
     progresso = 0
@@ -425,7 +439,6 @@ def carregar_analise_2_valores(uploaded_file, novo_caminho, escolha, quantidade_
         yield progresso
 
     elif quantidade_analise == 2 and escolha == "ALS":
-        print("ALSSSSSSSS")
         # Etapa 1: Importar Ceimic
         ALS.main(uploaded_file, novo_caminho)
         progresso += 25
@@ -441,8 +454,7 @@ def carregar_analise_2_valores(uploaded_file, novo_caminho, escolha, quantidade_
         progresso += 35
         yield progresso
 
-    elif quantidade_analise == 3 and escolha == "EuroFins":
-        print("EUROOOOOOO")
+    elif quantidade_analise == 2 and escolha == "EuroFins":
         # Etapa 1: Importar Ceimic
         Eurofins.main(uploaded_file, novo_caminho)
         progresso += 33
@@ -457,6 +469,23 @@ def carregar_analise_2_valores(uploaded_file, novo_caminho, escolha, quantidade_
         Analise3.main(novo_caminho, valor_primario, ordem_planilhas, valor_secundario, ordem_planilhas2)
         progresso += 34
         yield progresso
+
+#    elif quantidade_analise == 2 and escolha == "Vapor Solutions":
+#        print("VAPOOOOOO")
+#        # Etapa 1: Importar Ceimic
+#        VaporSolutions.main(uploaded_file, novo_caminho)
+#        progresso += 33
+#        yield progresso
+#        
+#        # Etapa 2: Organizar
+#        Organizar.main(novo_caminho)
+#        progresso += 33
+#        yield progresso
+#        
+#        # Etapa 3: Analise3
+#        Analise3.main(novo_caminho, valor_primario, ordem_planilhas, valor_secundario, ordem_planilhas2)
+#        progresso += 34
+#        yield progresso
 
 def main():
 
@@ -517,7 +546,7 @@ def main():
                 # Mostrar opções seguintes somente se o nome do arquivo for inserido
                 col1, col2 = st.columns(2)
                 with col1:
-                    escolha = st.radio("2° Escolha qual laboratório a análise deve ser feita:", ["Ceimic","ALS", "EuroFins"], key="escolha_laboratorio_1")
+                    escolha = st.radio("2° Escolha qual laboratório a análise deve ser feita:", ["Ceimic","ALS", "EuroFins", "Vapor Solutions"], key="escolha_laboratorio_1")
                 with col2:
                     # Mapeamento de opções de texto para valores numéricos
                     quantidade_analise_options = {"2 Valores Orientadores": 2, "3 Valores Orientadores": 3}
