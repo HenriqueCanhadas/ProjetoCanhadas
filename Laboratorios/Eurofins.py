@@ -7,7 +7,8 @@ def main(uploaded_file, novo_caminho):
     tabela = pd.read_excel(caminho)
 
     # URL do arquivo Excel no GitHub (caminho local)
-    url = r"C:\Users\henrique.canhadas\OneDrive - Servmar Ambientais\Documentos\Codigos\GitHub Tecnologia\ProjetoCanhadas\Tabelas Consulta\Banco de Dados\banco de dados - EUROFINS.xlsx"
+    url = "https://github.com/TecnologiaServmar/ProjetoCanhadas/raw/main/Tabelas%20Consulta/Banco%20de%20Dados/banco%20de%20dados%20-%20EUROFINS.xlsx"
+
     tabela_bd = pd.read_excel(url)
 
     colunas_merge = ["Análise"]

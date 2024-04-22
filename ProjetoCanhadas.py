@@ -466,7 +466,7 @@ def carregar_analise_2_valores(uploaded_file, novo_caminho, escolha, quantidade_
         yield progresso
         
         # Etapa 3: Analise3
-        Analise3.main(novo_caminho, valor_primario, ordem_planilhas, valor_secundario, ordem_planilhas2)
+        Analise2.main(novo_caminho, valor_primario, ordem_planilhas, valor_secundario, ordem_planilhas2)
         progresso += 34
         yield progresso
 
@@ -489,28 +489,28 @@ def carregar_analise_2_valores(uploaded_file, novo_caminho, escolha, quantidade_
 
 def main():
 
-    st.markdown(
-        """
-        <style>
-        .reportview-container .main .block-container{
-            max-width: 100%;
-            padding-top: 0rem;
-            padding-right: 1rem;
-            padding-left: 1rem;
-            padding-bottom: 0rem;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-    hide_menu_style = """
-            <style>
-            #MainMenu {visibility: hidden;}
-                footer {visibility: hidden;}
-                header {visibility: hidden;}
-            </style>
-            """
-    st.markdown(hide_menu_style, unsafe_allow_html=True)
+#    st.markdown(
+#        """
+#        <style>
+#        .reportview-container .main .block-container{
+#            max-width: 100%;
+#            padding-top: 0rem;
+#            padding-right: 1rem;
+#            padding-left: 1rem;
+#            padding-bottom: 0rem;
+#        }
+#        </style>
+#        """,
+#        unsafe_allow_html=True
+#    )
+#    hide_menu_style = """
+#            <style>
+#            #MainMenu {visibility: hidden;}
+#                footer {visibility: hidden;}
+#                header {visibility: hidden;}
+#            </style>
+#            """
+#    st.markdown(hide_menu_style, unsafe_allow_html=True)
 
     st.header("Projeto Canhadas")
 
