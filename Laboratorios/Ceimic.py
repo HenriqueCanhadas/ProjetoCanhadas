@@ -7,7 +7,7 @@ def main(uploaded_file, novo_caminho):
     tabela = pd.read_excel(uploaded_file)
 
     # URL do arquivo Excel no GitHub
-    url = "https://github.com/henriqueservmar/Teste-StreamLit/raw/main/Tabelas%20Consulta/Banco%20de%20Dados/banco%20de%20dados%20-%20CEIMIC.xlsx"
+    url = "https://github.com/TecnologiaServmar/ProjetoCanhadas/blob/main/Tabelas%20Consulta/Banco%20de%20Dados/banco%20de%20dados%20-%20CEIMIC.xlsx"
 
     # Ler o arquivo Excel da URL
     tabela_bd = pd.read_excel(url)
