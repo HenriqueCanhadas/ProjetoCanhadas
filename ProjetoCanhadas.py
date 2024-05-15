@@ -27,7 +27,7 @@ def abrir_radiobutton_modal_3_valores(contador, escolha_anterior=None,):
     with col1:
         # Gerar uma chave única para o widget radio
         chave_radio = f"lab_radio_{contador}"
-        escolha1 = st.radio("Primeiro Valor de Referencia:", ["Cetesb", "EPA", "Lista Holandesa", "Conama-420"], key=chave_radio, index=None)
+        escolha1 = st.radio("Primeiro Valor de Referencia:", ["Cetesb", "US EPA", "Lista Holandesa", "Conama-420"], key=chave_radio, index=None)
     with col1:
         if escolha1 == "Cetesb" or escolha1 != escolha_anterior:
             if escolha1 == "Cetesb":
@@ -43,11 +43,11 @@ def abrir_radiobutton_modal_3_valores(contador, escolha_anterior=None,):
                     valor_primario = 3
                 elif escolha_matriz == "Água Subterrânea":
                     valor_primario = 4
-            elif escolha1 == "EPA":
+            elif escolha1 == "US EPA":
                 # Gerar uma chave única para o widget radio dentro do if
                 chave_radio_epa = f"epa_radio_{contador}"
                 ordem_planilhas = "e"
-                escolha_matriz = st.radio("Selecione a matriz e/ou o cenário ambiental da EPA", ["Res Solo", "Res Ar", "Solo para GW 1123", "Água Subterrânea", "Ind Solo", "Ind Air"], key=chave_radio_epa, index=None)
+                escolha_matriz = st.radio("Selecione a matriz e/ou o cenário ambiental da US EPA", ["Res Solo", "Res Ar", "Solo para GW 1123", "Água Subterrânea", "Ind Solo", "Ind Air"], key=chave_radio_epa, index=None)
                 if escolha_matriz == "Res Solo":
                     valor_primario = 1
                 elif escolha_matriz == "Água Subterrânea":
@@ -89,7 +89,7 @@ def abrir_radiobutton_modal_3_valores(contador, escolha_anterior=None,):
 
     with col2:
         chave_radio = f"lab_radio_{contador}"
-        escolha = st.radio("Segundo Valor de Referencia:", ["Cetesb", "EPA", "Lista Holandesa", "Conama-420"], key=chave_radio, index=None)
+        escolha = st.radio("Segundo Valor de Referencia:", ["Cetesb", "US EPA", "Lista Holandesa", "Conama-420"], key=chave_radio, index=None)
     with col2:
         if escolha == "Cetesb" or escolha != escolha_anterior:
             if escolha == "Cetesb":
@@ -105,11 +105,11 @@ def abrir_radiobutton_modal_3_valores(contador, escolha_anterior=None,):
                     valor_secundario = 3
                 elif escolha_matriz == "Água Subterrânea":
                     valor_secundario = 4
-            elif escolha == "EPA":
+            elif escolha == "US EPA":
                 # Gerar uma chave única para o widget radio dentro do if
                 chave_radio_epa = f"epa_radio_{contador}"
                 ordem_planilhas2 = "e"
-                escolha_matriz = st.radio("Selecione a matriz e/ou o cenário ambiental da EPA", ["Res Solo", "Res Ar", "Solo para GW 1123", "Água Subterrânea", "Ind Solo", "Ind Air"], key=chave_radio_epa, index=None)
+                escolha_matriz = st.radio("Selecione a matriz e/ou o cenário ambiental da US EPA", ["Res Solo", "Res Ar", "Solo para GW 1123", "Água Subterrânea", "Ind Solo", "Ind Air"], key=chave_radio_epa, index=None)
                 if escolha_matriz == "Res Solo":
                     valor_secundario = 1
                 elif escolha_matriz == "Água Subterrânea":
@@ -151,7 +151,7 @@ def abrir_radiobutton_modal_3_valores(contador, escolha_anterior=None,):
 
     with col3:
         chave_radio = f"lab_radio_{contador}"
-        escolha2 = st.radio("Terceiro Valor de Referencia:", ["Cetesb", "EPA", "Lista Holandesa", "Conama-420"], key=chave_radio, index=None)
+        escolha2 = st.radio("Terceiro Valor de Referencia:", ["Cetesb", "US EPA", "Lista Holandesa", "Conama-420"], key=chave_radio, index=None)
     
     with col3:
         if escolha2 == "Cetesb" or escolha2 != escolha_anterior:
@@ -168,11 +168,11 @@ def abrir_radiobutton_modal_3_valores(contador, escolha_anterior=None,):
                     valor_terceario = 3
                 elif escolha_matriz == "Água Subterrânea":
                     valor_terceario = 4
-            elif escolha2 == "EPA":
+            elif escolha2 == "US EPA":
                 # Gerar uma chave única para o widget radio dentro do if
                 chave_radio_epa = f"epa_radio_{contador}"
                 ordem_planilhas3 = "e"
-                escolha_matriz = st.radio("Selecione a matriz e/ou o cenário ambiental da EPA", ["Res Solo", "Res Ar", "Solo para GW 1123", "Água Subterrânea", "Ind Solo", "Ind Air"], key=chave_radio_epa, index=None)
+                escolha_matriz = st.radio("Selecione a matriz e/ou o cenário ambiental da US EPA", ["Res Solo", "Res Ar", "Solo para GW 1123", "Água Subterrânea", "Ind Solo", "Ind Air"], key=chave_radio_epa, index=None)
                 if escolha_matriz == "Res Solo":
                     valor_terceario = 1
                 elif escolha_matriz == "Água Subterrânea":
@@ -224,7 +224,7 @@ def abrir_radiobutton_modal_2_valores(contador, escolha_anterior=None,):
     with st.container(border=True):  
         with col1:
             chave_radio = f"lab_radio_{contador}"
-            escolha1 = st.radio("Primeiro Valor de Referencia:", ["Cetesb", "EPA", "Lista Holandesa", "Conama-420"], key=chave_radio, index=None)
+            escolha1 = st.radio("Primeiro Valor de Referencia:", ["Cetesb", "US EPA", "Lista Holandesa", "Conama-420"], key=chave_radio, index=None)
 
         with col1:
             if escolha1 == "Cetesb" or escolha1 != escolha_anterior:
@@ -242,11 +242,11 @@ def abrir_radiobutton_modal_2_valores(contador, escolha_anterior=None,):
                             valor_primario = 3
                         elif escolha_matriz == "Água Subterrânea":
                             valor_primario = 4
-                    elif escolha1 == "EPA":
+                    elif escolha1 == "US EPA":
                         # Gerar uma chave única para o widget radio dentro do if
                         chave_radio_epa = f"epa_radio_{contador}"
                         ordem_planilhas = "e"
-                        escolha_matriz = st.radio("Selecione a matriz e/ou o cenário ambiental da EPA", ["Res Solo", "Res Ar", "Solo para GW 1123", "Água Subterrânea", "Ind Solo", "Ind Air"], key=chave_radio_epa, index=None)
+                        escolha_matriz = st.radio("Selecione a matriz e/ou o cenário ambiental da US EPA", ["Res Solo", "Res Ar", "Solo para GW 1123", "Água Subterrânea", "Ind Solo", "Ind Air"], key=chave_radio_epa, index=None)
                         if escolha_matriz == "Res Solo":
                             valor_primario = 1
                         elif escolha_matriz == "Água Subterrânea":
@@ -289,7 +289,7 @@ def abrir_radiobutton_modal_2_valores(contador, escolha_anterior=None,):
     with st.container(border=True):  
         with col2:
             chave_radio = f"lab_radio_{contador}"
-            escolha = st.radio("Segundo Valor de Referencia:", ["Cetesb", "EPA", "Lista Holandesa", "Conama-420"], key=chave_radio, index=None)
+            escolha = st.radio("Segundo Valor de Referencia:", ["Cetesb", "US EPA", "Lista Holandesa", "Conama-420"], key=chave_radio, index=None)
 
         if escolha == "Cetesb" or escolha != escolha_anterior:
             with col2:
@@ -306,11 +306,11 @@ def abrir_radiobutton_modal_2_valores(contador, escolha_anterior=None,):
                         valor_secundario = 3
                     elif escolha_matriz == "Água Subterrânea":
                         valor_secundario = 4
-                elif escolha == "EPA":
+                elif escolha == "US EPA":
                     # Gerar uma chave única para o widget radio dentro do if
                     chave_radio_epa = f"epa_radio_{contador}"
                     ordem_planilhas2 = "e"
-                    escolha_matriz = st.radio("Selecione a matriz e/ou o cenário ambiental da EPA", ["Res Solo", "Res Ar", "Solo para GW 1123", "Água Subterrânea", "Ind Solo", "Ind Air"], key=chave_radio_epa, index=None)
+                    escolha_matriz = st.radio("Selecione a matriz e/ou o cenário ambiental da US EPA", ["Res Solo", "Res Ar", "Solo para GW 1123", "Água Subterrânea", "Ind Solo", "Ind Air"], key=chave_radio_epa, index=None)
                     if escolha_matriz == "Res Solo":
                         valor_secundario = 1
                     elif escolha_matriz == "Água Subterrânea":
