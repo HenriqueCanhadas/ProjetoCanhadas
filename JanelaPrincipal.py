@@ -5,7 +5,6 @@ import requests
 import time
 
 st.set_page_config(layout="wide")
-
 st.markdown(
     """
     <style>
@@ -16,13 +15,13 @@ st.markdown(
         height: 100%;
     }
     .reportview-container {
-        margin: 20px;
+        margin: 10px;
         flex: 1;
     }
     .main .block-container {
-        width: calc(100% - 40px);  /* Subtrai as margens */
+        width: calc(100% - 15px);  /* Subtrai as margens */
         padding: 0;
-        margin: 0 auto;
+        margin: 10px;
     }
     
     /* Estilos responsivos para diferentes tamanhos de tela */
@@ -31,14 +30,13 @@ st.markdown(
             margin: 10px; /* Menor margem para telas menores */
         }
         .main .block-container {
-            width: calc(100% - 20px); /* Ajusta a largura para telas menores */
+            width: calc(100% - 50px); /* Ajusta a largura para telas menores */
         }
     }
     </style>
     """,
     unsafe_allow_html=True
 )
-
 
 # Função do Projeto Canhadas
 def projeto():
