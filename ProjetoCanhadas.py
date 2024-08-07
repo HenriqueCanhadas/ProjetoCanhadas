@@ -454,8 +454,6 @@ def carregar_analise_2_valores(uploaded_file, novo_caminho, escolha, quantidade_
 
 def main():
     #Configurações da pagina
-    st.set_page_config(layout="wide")
-    # Inserindo estilo CSS para personalização
     st.markdown(
         """
         <style>
