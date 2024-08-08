@@ -34,6 +34,9 @@ st.markdown(
         }
     }
     </style>
+    <div style="text-align: Left">
+        <span style="font-size: 50px; font-weight: bold;">SERVMAR</span>
+    </div>
     """,
     unsafe_allow_html=True
 )
@@ -90,7 +93,6 @@ def main():
             </style>
             """
     st.markdown(hide_menu_style, unsafe_allow_html=True)
-    st.title("SERVMAR")
     if "authentication_status" not in st.session_state:
         st.session_state["authentication_status"] = None
 

@@ -470,7 +470,7 @@ def main():
         .main .block-container {
             width: calc(100% - 15px);  /* Subtrai as margens */
             padding: 0;
-            #margin: -170px;
+            margin: -90px;
         }
 
         /* Estilos responsivos para diferentes tamanhos de tela */
@@ -484,7 +484,7 @@ def main():
         }
         </style>
         <div style="text-align: center; background-color:#d1d1e4; border-radius: 20px; padding: 10px;">
-            <span style="color: black; font-size: 40px; font-weight: bold;">Projeto Canhadas</span>
+            <span style="color: black; font-size: 70px; font-weight: bold;">Projeto Canhadas</span>
         </div>
         """,
         unsafe_allow_html=True
