@@ -470,7 +470,7 @@ def main():
         .main .block-container {
             width: calc(100% - 15px);  /* Subtrai as margens */
             padding: 0;
-            margin: -150px;
+            #margin: -150px;
         }
 
         /* Estilos responsivos para diferentes tamanhos de tela */
@@ -483,6 +483,9 @@ def main():
             }
         }
         </style>
+        <div style="text-align: center; background-color:#d1d1e4; border-radius: 20px; padding: 10px;">
+            <span style="color: black; font-size: 40px; font-weight: bold;">Projeto Canhadas</span>
+        </div>
         """,
         unsafe_allow_html=True
     )
@@ -497,9 +500,6 @@ def main():
         """
     st.markdown(hide_menu_style, unsafe_allow_html=True)
 
-
-    #Cabeçalho
-    st.header(":green-background[Projeto Canhadas]")
     #Separar pagina em duas Colunas
     left_column, right_column = st.columns(2,vertical_alignment="top")
     
@@ -512,7 +512,7 @@ def main():
         if uploaded_file:
             df = pd.read_excel(uploaded_file)
             st.write("Dados do arquivo Excel:")
-            st.write(df)
+            st.dataframe(df)
             diretório, _ = os.path.split(uploaded_file.name)
 
         #Na Coluna Direita:
