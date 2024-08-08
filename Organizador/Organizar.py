@@ -1,20 +1,22 @@
 import pandas as pd
 
 def main(novo_caminho):
-    # Define o caminho do arquivo Excel de entrada.
+    #Define o caminho do arquivo Excel
     caminho_excel = novo_caminho
-    # Abre o arquivo Excel para leitura.
+    #Leitura do arquivo Excel
     excel = pd.ExcelFile(caminho_excel)
-    data_frame_final = {}
+    data_frame_final = {} # Dicionário para armazenar os valores em um novo data_frame
     datas_amostra = {}  # Dicionário para armazenar datas das amostras para cada PM
 
     for sheet_name in excel.sheet_names:
-        # Lê cada aba (sheet) do arquivo Excel.
+        #Lê cada aba (sheet) do arquivo Excel.
         data_frame = pd.read_excel(caminho_excel, sheet_name)
+        #Seleciona os valores unicos da coluna SAMPLENAME
         lista_pm = data_frame['SAMPLENAME'].unique()
+        #Seleciona os valores unicos da coluna ANALYTE  
         lista_analyte = data_frame['ANALYTE'].unique()
 
-        # Inicializa um DataFrame para tabular os dados com uma linha extra para as datas.
+        #Inicializa um DataFrame para tabular os dados com uma linha extra para as datas.
         data_frame_tabelado = pd.DataFrame(index=range(len(lista_analyte) + 1), columns=['Parâmetro', 'CAS', 'Unidade'] + list(lista_pm))
         correspondencia_unidades = {}
         correspondencia_cas = {}
@@ -50,6 +52,20 @@ def main(novo_caminho):
 
         # Trata linhas que contenham percentuais, movendo para um DataFrame separado se necessário.
         # [Sua lógica aqui]
+                # Verificar se a coluna 'Unidade' contém '%'
+        if '%' in data_frame_tabelado['Unidade'].values:
+            df_percentagem = data_frame_tabelado[data_frame_tabelado['Unidade'] == '%']
+            if '%' not in data_frame_final:
+                data_frame_final['%'] = pd.DataFrame(index=range(1), columns=data_frame_tabelado.columns)
+            for index, row in df_percentagem.iterrows():
+                last_row_index = len(data_frame_final['%'])
+                data_frame_final['%'].loc[last_row_index + 2] = row
+            data_frame_tabelado = data_frame_tabelado[data_frame_tabelado['Unidade'] != '%']
+            for coluna_atual in data_frame_tabelado.columns:
+                if coluna_atual in data_frame_final['%'].columns:
+                    valor_segunda_linha = data_frame_tabelado[coluna_atual].iloc[0]
+                    data_frame_final['%'].loc[0, coluna_atual] = valor_segunda_linha
+
 
         # Salva o DataFrame organizado em um dicionário com o nome da aba como chave.
         data_frame_final[sheet_name] = data_frame_tabelado
