@@ -470,7 +470,7 @@ def main():
         .main .block-container {
             width: calc(100% - 15px);  /* Subtrai as margens */
             padding: 0;
-            #margin: -150px;
+            #margin: -170px;
         }
 
         /* Estilos responsivos para diferentes tamanhos de tela */
