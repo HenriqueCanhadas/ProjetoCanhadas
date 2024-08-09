@@ -19,7 +19,13 @@ def main(uploaded_file, novo_caminho):
     tabela_merge = pd.merge(tabela, tabela_bd, how='left', on=colunas_merge)
 
     #Formata a coluna SAMPDATE para o padrão desejado, no caso %d/%m/%Y %H:%M
-    tabela_merge['SAMPDATE'] = pd.to_datetime(tabela_merge['SAMPDATE'], format='%m/%d/%Y %H:%M').dt.strftime('%d/%m/%Y %H:%M')
+    try:
+    # Tenta converter a coluna SAMPDATE para o formato desejado
+        tabela_merge['SAMPDATE'] = pd.to_datetime(tabela_merge['SAMPDATE'], format='%m/%d/%Y %H:%M').dt.strftime('%d/%m/%Y %H:%M')
+    except Exception as e:
+        # Caso ocorra algum erro, exibe uma mensagem (opcional) e segue o código
+        print(f"Erro ao converter a coluna SAMPDATE: {e}")
+        pass  # Continua a execução do código
     
     #O novo data_frame recebe os valores mesclados
     data_frame = tabela_merge

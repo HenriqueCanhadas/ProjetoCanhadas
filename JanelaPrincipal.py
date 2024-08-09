@@ -4,49 +4,50 @@ import yaml
 import requests
 import time
 
+#Configurações da pagina
 st.set_page_config(layout="wide")
 st.markdown(
-    """
-    <style>
-    html, body, [class*="View"] {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-    }
-    .reportview-container {
-        margin: 10px;
-        flex: 1;
-    }
-    .main .block-container {
-        width: calc(100% - 15px);  /* Subtrai as margens */
-        padding: 0;
-        margin: 10px;
-    }
-    
-    /* Estilos responsivos para diferentes tamanhos de tela */
-    @media (max-width: 768px) {
+        """
+        <style>
+        html, body, [class*="View"] {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
         .reportview-container {
-            margin: 10px; /* Menor margem para telas menores */
+            margin: 10px;
+            flex: 1;
         }
         .main .block-container {
-            width: calc(100% - 50px); /* Ajusta a largura para telas menores */
+            width: calc(100% - 15px);  /* Subtrai as margens */
+            padding: 0;
+            margin: 10px;
         }
-    }
-    </style>
-    <div style="text-align: Left">
-        <span style="font-size: 50px; font-weight: bold;">SERVMAR</span>
-    </div>
-    """,
-    unsafe_allow_html=True
+
+        /* Estilos responsivos para diferentes tamanhos de tela */
+        @media (max-width: 768px) {
+            .reportview-container {
+                margin: 10px; /* Menor margem para telas menores */
+            }
+            .main .block-container {
+                width: calc(100% - 50px); /* Ajusta a largura para telas menores */
+            }
+        }
+        </style>
+        <div style="text-align: Left">
+            <span style="font-size: 50px; font-weight: bold;">SERVMAR</span>
+        </div>
+        """,
+        unsafe_allow_html=True
 )
 
-# Função do Projeto Canhadas
+#Função para exceutar o Projeto Canhadas
 def projeto():
     import ProjetoCanhadas
     ProjetoCanhadas.main()
 
-# Função para validar a entrada
+#Função para autenticar o usuário
 def authenticate():
     if "authentication_status" not in st.session_state:
         st.session_state["authentication_status"] = None
@@ -71,7 +72,7 @@ def authenticate():
     )
     authenticator.login()
 
-# Função para exibir a mensagem temporária
+#Função para mensagem temporária de sucessp para o login
 def display_temporary_success_message():
     # Aguarda 5 segundos
     time.sleep(3)
@@ -82,7 +83,7 @@ def display_temporary_success_message():
     # Remove a mensagem de sucesso
     success_message.empty()
 
-# Função principal que define a configuração da página e o fluxo de autenticação
+
 def main():
 
     hide_menu_style = """
@@ -93,12 +94,15 @@ def main():
             </style>
             """
     st.markdown(hide_menu_style, unsafe_allow_html=True)
+
+    # Verifica se o status de autenticação está presente na sessão
     if "authentication_status" not in st.session_state:
         st.session_state["authentication_status"] = None
 
     if st.session_state.get("authentication_status") is None or st.session_state.get("authentication_status") is False:
         authenticate()
 
+    #Verifica o Estado de Login
     if st.session_state.get("authentication_status"):
         # Verifica se a mensagem de sucesso já foi exibida
         if not st.session_state.get("success_message_displayed", False):
@@ -106,8 +110,9 @@ def main():
             display_temporary_success_message()
             # Marca que a mensagem foi exibida para não repetir na próxima execução
             st.session_state["success_message_displayed"] = True
-        # Continua para carregar o projeto sem esperar explicitamente aqui
+        #Chamam a função do Projeto Canhadas
         projeto()
+    #Se a senha ou login estirverem errados imprime a menssagem de erro:
     elif st.session_state.get("authentication_status") is False:
         st.error("Usuário e/ou Senha Incorretos")
 
