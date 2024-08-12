@@ -4,6 +4,7 @@ import pandas as pd
 
 #Importar Codigos de cada laboratorio
 from Laboratorios import Ceimic
+from Laboratorios import Outros
 from Laboratorios import ALS
 from Laboratorios import Eurofins
 from Laboratorios import VaporSolutions
@@ -404,6 +405,34 @@ def carregar_analise_3_valores(uploaded_file, novo_caminho, escolha, quantidade_
         Analise3.main(novo_caminho, valor_primario, ordem_planilhas, valor_secundario, ordem_planilhas2, valor_terceario, ordem_planilhas3)
         progresso += 34
         yield progresso
+
+    elif quantidade_analise == 3 and escolha == "Vapor Solutions":
+        #Rodar o Codigo da Vapor Solutions
+        VaporSolutions.main(uploaded_file, novo_caminho)
+        progresso += 33
+        yield progresso
+        #Rodar o Codigo Organizar
+        Organizar.main(novo_caminho)
+        progresso += 33
+        yield progresso
+        #Rodar o Codigo de 3 Analises
+        Analise3.main(novo_caminho, valor_primario, ordem_planilhas, valor_secundario, ordem_planilhas2, valor_terceario, ordem_planilhas3)
+        progresso += 34
+        yield progresso
+
+    elif quantidade_analise == 3 and escolha == "Outros":
+        #Rodar o Codigo da Outros
+        Outros.main(uploaded_file, novo_caminho)
+        progresso += 33
+        yield progresso
+        #Rodar o Codigo Organizar
+        Organizar.main(novo_caminho)
+        progresso += 33
+        yield progresso
+        #Rodar o Codigo de 3 Analises
+        Analise3.main(novo_caminho, valor_primario, ordem_planilhas, valor_secundario, ordem_planilhas2, valor_terceario, ordem_planilhas3)
+        progresso += 34
+        yield progresso
 #Para 2 Valores Orientadores  
 def carregar_analise_2_valores(uploaded_file, novo_caminho, escolha, quantidade_analise, valor_primario, ordem_planilhas, valor_secundario, ordem_planilhas2):
     #Variavel para a barra de Progresso
@@ -440,6 +469,34 @@ def carregar_analise_2_valores(uploaded_file, novo_caminho, escolha, quantidade_
     elif quantidade_analise == 2 and escolha == "EuroFins":
         #Rodar o Codigo Eurofins
         Eurofins.main(uploaded_file, novo_caminho)
+        progresso += 33
+        yield progresso
+        #Rodar o Codigo Organizar
+        Organizar.main(novo_caminho)
+        progresso += 33
+        yield progresso
+        #Rodar o Codigo de 2 Analises
+        Analise2.main(novo_caminho, valor_primario, ordem_planilhas, valor_secundario, ordem_planilhas2)
+        progresso += 34
+        yield progresso
+
+    elif quantidade_analise == 2 and escolha == "Vapor Solutions":
+        #Rodar o Codigo Vapor Solutions
+        VaporSolutions.main(uploaded_file, novo_caminho)
+        progresso += 33
+        yield progresso
+        #Rodar o Codigo Organizar
+        Organizar.main(novo_caminho)
+        progresso += 33
+        yield progresso
+        #Rodar o Codigo de 2 Analises
+        Analise2.main(novo_caminho, valor_primario, ordem_planilhas, valor_secundario, ordem_planilhas2)
+        progresso += 34
+        yield progresso
+
+    elif quantidade_analise == 2 and escolha == "Outros":
+        #Rodar o Codigo Outros
+        Outros.main(uploaded_file, novo_caminho)
         progresso += 33
         yield progresso
         #Rodar o Codigo Organizar
@@ -506,7 +563,7 @@ def main():
     #Na Coluna Esquerda:
     with left_column:
         #Fazer o Upload do Arquivo Excel para o programa
-        uploaded_file = st.file_uploader("Carregue seu arquivo Excel:", type=["xlsx", "xls"], key="excel_uploader_1",label_visibility="visible")
+        uploaded_file = st.file_uploader("Carregue seu arquivo Excel:", type=["xlsx"], key="excel_uploader_1",label_visibility="visible")
         diretório=""
         #Se o diretorio e arquivo forem verdadeiros:
         if uploaded_file:
@@ -532,7 +589,7 @@ def main():
                 col1, col2 = st.columns(2)
                 #Na coluna 1 deve ser escolhido o Laboratório
                 with col1:
-                    escolha = st.radio("2° Escolha qual laboratório a análise deve ser feita:", ["Ceimic","ALS", "EuroFins", "Vapor Solutions"], key="escolha_laboratorio_1")
+                    escolha = st.radio("2° Escolha qual laboratório a análise deve ser feita:", ["Ceimic","ALS", "EuroFins", "Vapor Solutions", "Outros"], key="escolha_laboratorio_1")
                 #Na coluna 2 deve ser escolhido a quantidede de Valores Orientadores
                 with col2:
                     # Mapeamento de opções de texto para valores numéricos
